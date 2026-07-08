@@ -35,7 +35,7 @@ function ContactPage() {
             className="group inline-block text-3xl md:text-5xl"
           >
             studio@objet.co
-            <span className="mt-1 block h-px w-0 bg-black transition-all duration-500 group-hover:w-full" />
+            <span className="mt-1 block h-px w-0 bg-foreground transition-all duration-500 group-hover:w-full" />
           </a>
         </Reveal>
 
@@ -63,7 +63,7 @@ function ContactPage() {
           </form>
         </Reveal>
 
-        <div className="mt-24 grid gap-8 border-t border-black/10 pt-8 text-xs uppercase tracking-widest opacity-60 md:grid-cols-3">
+        <div className="mt-24 grid gap-8 border-t border-foreground/10 pt-8 text-xs uppercase tracking-widest opacity-60 md:grid-cols-3">
           <div>Rua da Boavista 84<br />1200-070 Lisbon</div>
           <div>Mon — Fri, 09:00 — 18:00 WET</div>
           <div>
@@ -98,14 +98,14 @@ function Field({
           name={name}
           rows={4}
           required
-          className="mt-2 block w-full border-b border-black/30 bg-transparent py-3 text-lg outline-none transition-colors duration-300 focus:border-black"
+          className="mt-2 block w-full border-b border-foreground/30 bg-transparent py-3 text-lg outline-none transition-colors duration-300 focus:border-foreground"
         />
       ) : (
         <input
           type={type}
           name={name}
           required
-          className="mt-2 block w-full border-b border-black/30 bg-transparent py-3 text-lg outline-none transition-colors duration-300 focus:border-black"
+          className="mt-2 block w-full border-b border-foreground/30 bg-transparent py-3 text-lg outline-none transition-colors duration-300 focus:border-foreground"
         />
       )}
     </label>

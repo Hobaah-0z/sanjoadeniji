@@ -47,7 +47,7 @@ function AboutPage() {
         </Reveal>
       </section>
 
-      <section className="border-t border-black/10 px-6 py-24 md:px-10">
+      <section className="border-t border-foreground/10 px-6 py-24 md:px-10">
         <div className="grid gap-16 md:grid-cols-12">
           <Reveal className="md:col-span-4">
             <h2 className="text-xs uppercase tracking-widest opacity-60">
@@ -74,14 +74,14 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-black/10 px-6 py-24 md:px-10">
+      <section className="border-t border-foreground/10 px-6 py-24 md:px-10">
         <Reveal className="mb-12">
           <h2 className="font-display text-4xl uppercase md:text-6xl">Process</h2>
         </Reveal>
         <div className="grid gap-10 md:grid-cols-4">
           {process.map((p, i) => (
             <Reveal key={p.n} delay={i * 0.06}>
-              <div className="border-t border-black pt-6">
+              <div className="border-t border-foreground pt-6">
                 <span className="text-xs uppercase tracking-widest opacity-60">
                   {p.n}
                 </span>
@@ -93,14 +93,14 @@ function AboutPage() {
         </div>
       </section>
 
-      <section className="border-t border-black/10 px-6 py-24 md:px-10">
+      <section className="border-t border-foreground/10 px-6 py-24 md:px-10">
         <Reveal className="mb-12">
           <h2 className="font-display text-4xl uppercase md:text-6xl">Team</h2>
         </Reveal>
         <div className="grid gap-10 md:grid-cols-4">
           {team.map((m, i) => (
             <Reveal key={m.name} delay={i * 0.05}>
-              <div className="aspect-[4/5] bg-neutral-100" />
+              <div className="aspect-[4/5] bg-muted" />
               <p className="font-display mt-4 text-2xl uppercase">{m.name}</p>
               <p className="text-xs uppercase tracking-widest opacity-60">
                 {m.role}

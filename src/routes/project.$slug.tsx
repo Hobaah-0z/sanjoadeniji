@@ -44,7 +44,7 @@ function ProjectPage() {
 
   return (
     <>
-      <section className="relative h-[92vh] w-full overflow-hidden bg-neutral-100">
+      <section className="relative h-[92vh] w-full overflow-hidden bg-muted">
         {project.video ? (
           <video
             src={project.video}
@@ -124,7 +124,7 @@ function ProjectPage() {
       ))}
 
       {/* Next */}
-      <section className="border-t border-black/10 px-6 py-24 md:px-10">
+      <section className="border-t border-foreground/10 px-6 py-24 md:px-10">
         <Reveal className="mb-8 flex items-end justify-between">
           <span className="text-xs uppercase tracking-widest opacity-60">
             Next Project
@@ -141,7 +141,7 @@ function ProjectPage() {
 
 function Meta({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border-t border-black pt-3">
+    <div className="border-t border-foreground pt-3">
       <p className="text-xs uppercase tracking-widest opacity-60">{label}</p>
       <p className="mt-1 text-lg">{value}</p>
     </div>

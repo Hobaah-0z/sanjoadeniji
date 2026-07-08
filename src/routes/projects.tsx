@@ -90,7 +90,7 @@ function ProjectsPage() {
       </section>
 
       {/* Logo Collection */}
-      <section className="border-t border-black/10 px-6 py-24 md:px-10">
+      <section className="border-t border-foreground/10 px-6 py-24 md:px-10">
         <Reveal className="mb-12 flex items-end justify-between">
           <h2 className="font-display text-4xl uppercase md:text-6xl">
             Logo Collection
@@ -99,11 +99,11 @@ function ProjectsPage() {
             2018 — 2025
           </span>
         </Reveal>
-        <div className="grid grid-cols-3 gap-px bg-black/10 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+        <div className="grid grid-cols-3 gap-px bg-foreground/10 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {logoMarks.map((m, i) => (
             <div
               key={m.label}
-              className="group flex aspect-square flex-col items-center justify-center gap-2 bg-white p-6 transition-colors duration-500 hover:bg-neutral-50"
+              className="group flex aspect-square flex-col items-center justify-center gap-2 bg-background p-6 transition-colors duration-500 hover:bg-muted"
             >
               <LogoMark index={i} />
               <div className="mt-2 text-center text-[10px] uppercase tracking-widest opacity-60">
@@ -117,7 +117,7 @@ function ProjectsPage() {
       </section>
 
       {/* Case studies */}
-      <section className="border-t border-black/10 px-6 pt-24 pb-8 md:px-10">
+      <section className="border-t border-foreground/10 px-6 pt-24 pb-8 md:px-10">
         <Reveal>
           <h2 className="font-display text-4xl uppercase md:text-6xl">
             Selected Case Studies
@@ -162,7 +162,7 @@ function FilterBar({
   onChange: (c: string) => void;
 }) {
   return (
-    <div className="sticky top-16 z-30 border-y border-black/10 bg-white/90 backdrop-blur-md">
+    <div className="sticky top-16 z-30 border-y border-foreground/10 bg-background/90 backdrop-blur-md">
       <div className="flex snap-x gap-2 overflow-x-auto px-6 py-4 md:px-10">
         {categories.map((c) => {
           const on = c === active;
@@ -172,8 +172,8 @@ function FilterBar({
               onClick={() => onChange(c)}
               className={`snap-start whitespace-nowrap rounded-full border px-4 py-1.5 text-xs uppercase tracking-widest transition-colors duration-300 ${
                 on
-                  ? "border-black bg-black text-white"
-                  : "border-black/20 hover:border-black"
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-foreground/20 hover:border-foreground"
               }`}
             >
               {c}
@@ -193,21 +193,21 @@ function LogoMark({ index }: { index: number }) {
     case 0:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <circle cx="20" cy="20" r="16" fill="none" stroke="black" strokeWidth="2" />
-          <circle cx="20" cy="20" r="4" fill="black" />
+          <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="20" cy="20" r="4" fill="currentColor" />
         </svg>
       );
     case 1:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <rect x="4" y="4" width="32" height="32" fill="none" stroke="black" strokeWidth="2" />
-          <path d="M4 4 L36 36 M36 4 L4 36" stroke="black" strokeWidth="2" />
+          <rect x="4" y="4" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path d="M4 4 L36 36 M36 4 L4 36" stroke="currentColor" strokeWidth="2" />
         </svg>
       );
     case 2:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <path d="M4 32 L20 4 L36 32 Z" fill="black" />
+          <path d="M4 32 L20 4 L36 32 Z" fill="currentColor" />
         </svg>
       );
     case 3:
@@ -220,24 +220,24 @@ function LogoMark({ index }: { index: number }) {
             dominantBaseline="middle"
             fontFamily="Anton, Impact, sans-serif"
             fontSize="22"
-            fill="black"
+            fill="currentColor"
           >
             {String.fromCharCode(65 + (index % 26))}
           </text>
-          <rect x="2" y="2" width="36" height="36" fill="none" stroke="black" strokeWidth="1" />
+          <rect x="2" y="2" width="36" height="36" fill="none" stroke="currentColor" strokeWidth="1" />
         </svg>
       );
     case 4:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <circle cx="14" cy="20" r="10" fill="none" stroke="black" strokeWidth="2" />
-          <circle cx="26" cy="20" r="10" fill="none" stroke="black" strokeWidth="2" />
+          <circle cx="14" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="26" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
         </svg>
       );
     default:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <path d="M6 6 H34 V14 H14 V26 H34 V34 H6 Z" fill="black" />
+          <path d="M6 6 H34 V14 H14 V26 H34 V34 H6 Z" fill="currentColor" />
         </svg>
       );
   }
