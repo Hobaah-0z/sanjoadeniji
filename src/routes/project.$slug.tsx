@@ -96,7 +96,7 @@ function ProjectPage() {
         </div>
       </section>
 
-      {project.gallery.map((src, i) => (
+      {project.gallery.map((src: string, i: number) => (
         <section key={src + i} className={i % 2 === 0 ? "" : "px-6 md:px-10"}>
           {i % 2 === 0 ? (
             <Reveal>
