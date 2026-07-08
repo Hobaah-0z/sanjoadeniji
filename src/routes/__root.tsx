@@ -77,14 +77,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Objet — Independent Creative Studio" },
+      {
+        name: "description",
+        content:
+          "Objet is an independent creative studio specialising in branding, art direction, typography and moving image.",
+      },
+      { name: "author", content: "Objet Studio" },
+      { property: "og:title", content: "Objet — Independent Creative Studio" },
+      {
+        property: "og:description",
+        content:
+          "Independent creative studio specialising in branding, art direction, typography and moving image.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -92,6 +99,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -119,8 +132,24 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SiteChrome />
     </QueryClientProvider>
+  );
+}
+
+import { Header } from "../components/site/Header";
+import { Footer } from "../components/site/Footer";
+import { CustomCursor } from "../components/site/CustomCursor";
+
+function SiteChrome() {
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <CustomCursor />
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 }
