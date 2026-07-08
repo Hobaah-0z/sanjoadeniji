@@ -95,7 +95,7 @@ function Index() {
       </section>
 
       {/* STATEMENT */}
-      <section className="border-y border-black/10 px-6 py-32 md:px-10">
+      <section className="border-y border-foreground/10 px-6 py-32 md:px-10">
         <Reveal>
           <p className="font-display max-w-[1400px] text-4xl uppercase leading-[1.05] md:text-7xl">
             We build identity systems, typefaces and moving image for brands

@@ -90,7 +90,7 @@ function ProjectsPage() {
       </section>
 
       {/* Logo Collection */}
-      <section className="border-t border-black/10 px-6 py-24 md:px-10">
+      <section className="border-t border-foreground/10 px-6 py-24 md:px-10">
         <Reveal className="mb-12 flex items-end justify-between">
           <h2 className="font-display text-4xl uppercase md:text-6xl">
             Logo Collection
@@ -99,11 +99,11 @@ function ProjectsPage() {
             2018 — 2025
           </span>
         </Reveal>
-        <div className="grid grid-cols-3 gap-px bg-black/10 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+        <div className="grid grid-cols-3 gap-px bg-foreground/10 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
           {logoMarks.map((m, i) => (
             <div
               key={m.label}
-              className="group flex aspect-square flex-col items-center justify-center gap-2 bg-white p-6 transition-colors duration-500 hover:bg-neutral-50"
+              className="group flex aspect-square flex-col items-center justify-center gap-2 bg-background p-6 transition-colors duration-500 hover:bg-muted"
             >
               <LogoMark index={i} />
               <div className="mt-2 text-center text-[10px] uppercase tracking-widest opacity-60">
@@ -117,7 +117,7 @@ function ProjectsPage() {
       </section>
 
       {/* Case studies */}
-      <section className="border-t border-black/10 px-6 pt-24 pb-8 md:px-10">
+      <section className="border-t border-foreground/10 px-6 pt-24 pb-8 md:px-10">
         <Reveal>
           <h2 className="font-display text-4xl uppercase md:text-6xl">
             Selected Case Studies
@@ -162,7 +162,7 @@ function FilterBar({
   onChange: (c: string) => void;
 }) {
   return (
-    <div className="sticky top-16 z-30 border-y border-black/10 bg-white/90 backdrop-blur-md">
+    <div className="sticky top-16 z-30 border-y border-foreground/10 bg-background/90 backdrop-blur-md">
       <div className="flex snap-x gap-2 overflow-x-auto px-6 py-4 md:px-10">
         {categories.map((c) => {
           const on = c === active;
@@ -172,8 +172,8 @@ function FilterBar({
               onClick={() => onChange(c)}
               className={`snap-start whitespace-nowrap rounded-full border px-4 py-1.5 text-xs uppercase tracking-widest transition-colors duration-300 ${
                 on
-                  ? "border-black bg-black text-white"
-                  : "border-black/20 hover:border-black"
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-foreground/20 hover:border-foreground"
               }`}
             >
               {c}

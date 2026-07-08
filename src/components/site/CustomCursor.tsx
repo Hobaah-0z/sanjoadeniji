@@ -30,7 +30,7 @@ export function CustomCursor() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed z-[100] rounded-full bg-black transition-[width,height] duration-300 ease-out"
+      className="pointer-events-none fixed z-[100] rounded-full bg-foreground transition-[width,height] duration-300 ease-out"
       style={{
         left: pos.x,
         top: pos.y,
@@ -41,7 +41,7 @@ export function CustomCursor() {
       }}
     >
       <span
-        className="absolute inset-0 grid place-items-center text-[11px] uppercase tracking-widest text-white transition-opacity duration-200"
+        className="absolute inset-0 grid place-items-center text-[11px] uppercase tracking-widest text-background transition-opacity duration-200"
         style={{ opacity: hovering ? 1 : 0 }}
       >
         View

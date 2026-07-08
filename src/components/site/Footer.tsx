@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 export function Footer() {
   return (
-    <footer className="border-t border-black/10 bg-white px-6 py-16 md:px-10">
+    <footer className="border-t border-foreground/10 bg-background px-6 py-16 md:px-10">
       <div className="grid gap-10 md:grid-cols-4">
         <div>
           <Link to="/" className="font-display text-5xl uppercase leading-none">
@@ -37,7 +37,7 @@ export function Footer() {
           </div>
         </div>
       </div>
-      <div className="mt-16 flex flex-col justify-between gap-2 border-t border-black/10 pt-6 text-xs uppercase tracking-widest opacity-60 md:flex-row">
+      <div className="mt-16 flex flex-col justify-between gap-2 border-t border-foreground/10 pt-6 text-xs uppercase tracking-widest opacity-60 md:flex-row">
         <span>© {new Date().getFullYear()} Objet Studio</span>
         <span>All rights reserved</span>
       </div>

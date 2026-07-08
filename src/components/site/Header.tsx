@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const navLinks = [
   { to: "/projects", label: "Projects" },
@@ -40,7 +41,7 @@ export function Header() {
         animate={{ y: hidden && !open ? -100 : 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
         className={`fixed inset-x-0 top-0 z-50 transition-colors duration-500 ${
-          solid ? "bg-white/90 backdrop-blur-md border-b border-black/10" : "bg-transparent"
+          solid ? "bg-background/90 backdrop-blur-md border-b border-foreground/10" : "bg-transparent"
         }`}
       >
         <div className="flex h-16 items-center justify-between px-6 md:px-10">
@@ -80,6 +81,7 @@ export function Header() {
               IG
             </a>
             <span className="text-sm uppercase tracking-wider opacity-60">Lisbon, PT</span>
+            <ThemeToggle />
           </div>
 
           <button
@@ -88,12 +90,12 @@ export function Header() {
             onClick={() => setOpen((v) => !v)}
           >
             <span
-              className={`h-px w-6 bg-black transition-transform duration-300 ${
+              className={`h-px w-6 bg-foreground transition-transform duration-300 ${
                 open ? "translate-y-1.5 rotate-45" : ""
               }`}
             />
             <span
-              className={`h-px w-6 bg-black transition-transform duration-300 ${
+              className={`h-px w-6 bg-foreground transition-transform duration-300 ${
                 open ? "-translate-y-0.5 -rotate-45" : ""
               }`}
             />
@@ -108,7 +110,7 @@ export function Header() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-white md:hidden"
+            className="fixed inset-0 z-40 bg-background md:hidden"
           >
             <nav className="flex h-full flex-col justify-center gap-6 px-8">
               {navLinks.map((l, i) => (
@@ -141,9 +143,12 @@ export function Header() {
                 className="mt-10 flex justify-between text-xs uppercase tracking-widest opacity-60"
               >
                 <span>Lisbon, PT</span>
-                <a href="https://instagram.com" target="_blank" rel="noreferrer">
-                  Instagram
-                </a>
+                <div className="flex gap-6">
+                  <ThemeToggle className="opacity-100" />
+                  <a href="https://instagram.com" target="_blank" rel="noreferrer">
+                    Instagram
+                  </a>
+                </div>
               </motion.div>
             </nav>
           </motion.div>
