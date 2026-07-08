@@ -193,21 +193,21 @@ function LogoMark({ index }: { index: number }) {
     case 0:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <circle cx="20" cy="20" r="16" fill="none" stroke="black" strokeWidth="2" />
-          <circle cx="20" cy="20" r="4" fill="black" />
+          <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="20" cy="20" r="4" fill="currentColor" />
         </svg>
       );
     case 1:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <rect x="4" y="4" width="32" height="32" fill="none" stroke="black" strokeWidth="2" />
-          <path d="M4 4 L36 36 M36 4 L4 36" stroke="black" strokeWidth="2" />
+          <rect x="4" y="4" width="32" height="32" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path d="M4 4 L36 36 M36 4 L4 36" stroke="currentColor" strokeWidth="2" />
         </svg>
       );
     case 2:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <path d="M4 32 L20 4 L36 32 Z" fill="black" />
+          <path d="M4 32 L20 4 L36 32 Z" fill="currentColor" />
         </svg>
       );
     case 3:
@@ -220,24 +220,24 @@ function LogoMark({ index }: { index: number }) {
             dominantBaseline="middle"
             fontFamily="Anton, Impact, sans-serif"
             fontSize="22"
-            fill="black"
+            fill="currentColor"
           >
             {String.fromCharCode(65 + (index % 26))}
           </text>
-          <rect x="2" y="2" width="36" height="36" fill="none" stroke="black" strokeWidth="1" />
+          <rect x="2" y="2" width="36" height="36" fill="none" stroke="currentColor" strokeWidth="1" />
         </svg>
       );
     case 4:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <circle cx="14" cy="20" r="10" fill="none" stroke="black" strokeWidth="2" />
-          <circle cx="26" cy="20" r="10" fill="none" stroke="black" strokeWidth="2" />
+          <circle cx="14" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
+          <circle cx="26" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
         </svg>
       );
     default:
       return (
         <svg viewBox="0 0 40 40" className={common}>
-          <path d="M6 6 H34 V14 H14 V26 H34 V34 H6 Z" fill="black" />
+          <path d="M6 6 H34 V14 H14 V26 H34 V34 H6 Z" fill="currentColor" />
         </svg>
       );
   }
