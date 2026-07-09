@@ -73,7 +73,7 @@ function Index() {
 
         <div className="flex flex-col gap-20">
           {disciplines.map((discipline) => {
-            const items = grouped[discipline].slice(0, 5);
+            const items = grouped[discipline].slice(0, 6);
             return (
               <div key={discipline}>
                 <Reveal className="mb-6 flex items-baseline justify-between border-b border-foreground/10 pb-4">
