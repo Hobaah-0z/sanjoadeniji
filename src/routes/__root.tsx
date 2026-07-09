@@ -88,10 +88,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Independent creative studio specialising in branding, art direction, typography and moving image.",
+          "Objet is an independent creative studio specialising in branding, art direction, typography and moving image.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Objet — Independent Creative Studio" },
+      { name: "twitter:description", content: "Objet is an independent creative studio specialising in branding, art direction, typography and moving image." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e846d0ad-aadd-4c26-89ef-ed259b55c3d6/id-preview-4179f1bd--8b887e2d-cbf1-436e-8b4b-3e1625324d16.lovable.app-1783564844792.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e846d0ad-aadd-4c26-89ef-ed259b55c3d6/id-preview-4179f1bd--8b887e2d-cbf1-436e-8b4b-3e1625324d16.lovable.app-1783564844792.png" },
     ],
     links: [
       {
