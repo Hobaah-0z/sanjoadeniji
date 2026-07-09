@@ -10,7 +10,12 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const featured = projects.slice(0, 4);
+  // Group projects by discipline (category)
+  const grouped = projects.reduce<Record<string, typeof projects>>((acc, p) => {
+    (acc[p.category] ||= []).push(p);
+    return acc;
+  }, {});
+  const disciplines = Object.keys(grouped);
 
   return (
     <>
@@ -66,28 +71,39 @@ function Index() {
           </Link>
         </Reveal>
 
-        <div className="grid gap-x-6 gap-y-16 md:grid-cols-12">
-          {featured.map((p, i) => (
-            <Reveal
-              key={p.slug}
-              delay={i * 0.06}
-              className={
-                i % 4 === 0
-                  ? "md:col-span-7"
-                  : i % 4 === 1
-                    ? "md:col-span-5 md:mt-24"
-                    : i % 4 === 2
-                      ? "md:col-span-5"
-                      : "md:col-span-7 md:mt-24"
-              }
-            >
-              <ProjectCard
-                project={p}
-                index={i}
-                aspect={i % 2 === 0 ? "aspect-[4/3]" : "aspect-[3/4]"}
-              />
-            </Reveal>
-          ))}
+        <div className="flex flex-col gap-20">
+          {disciplines.map((discipline) => {
+            const items = grouped[discipline].slice(0, 5);
+            return (
+              <div key={discipline}>
+                <Reveal className="mb-6 flex items-baseline justify-between border-b border-foreground/10 pb-4">
+                  <h3 className="font-display text-2xl uppercase md:text-4xl">
+                    {discipline}
+                  </h3>
+                  <span className="text-xs uppercase tracking-widest opacity-60">
+                    {items.length} {items.length === 1 ? "Project" : "Projects"}
+                  </span>
+                </Reveal>
+                <div className="-mx-6 overflow-x-auto md:-mx-10">
+                  <div className="flex snap-x snap-mandatory gap-6 px-6 pb-4 md:px-10">
+                    {items.map((p, i) => (
+                      <Reveal
+                        key={p.slug}
+                        delay={i * 0.06}
+                        className="w-[75vw] shrink-0 snap-start sm:w-[45vw] md:w-[30vw] lg:w-[22vw]"
+                      >
+                        <ProjectCard
+                          project={p}
+                          index={i}
+                          aspect="aspect-[4/5]"
+                        />
+                      </Reveal>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
