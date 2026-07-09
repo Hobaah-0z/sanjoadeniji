@@ -11,7 +11,47 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+function DisciplineRow({
+  discipline,
+  items,
+}: {
+  discipline: string;
+  items: (typeof projects)[number][];
+}) {
+  const scrollRef = useHorizontalScroll<HTMLDivElement>();
+
+  return (
+    <div>
+      <Reveal className="mb-6 flex items-baseline justify-between border-b border-foreground/10 pb-4">
+        <h3 className="font-display text-2xl uppercase md:text-4xl">
+          {discipline}
+        </h3>
+        <span className="text-xs uppercase tracking-widest opacity-60">
+          {items.length} {items.length === 1 ? "Project" : "Projects"}
+        </span>
+      </Reveal>
+      <div
+        ref={scrollRef}
+        className="-mx-6 overflow-x-auto scrollbar-hide md:-mx-10"
+      >
+        <div className="flex snap-x snap-mandatory gap-6 px-6 pb-4 md:px-10">
+          {items.map((p, i) => (
+            <Reveal
+              key={p.slug}
+              delay={i * 0.06}
+              className="w-[75vw] shrink-0 snap-start sm:w-[45vw] md:w-[30vw] lg:w-[22vw]"
+            >
+              <ProjectCard project={p} index={i} aspect="aspect-[4/5]" />
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Index() {
+
   // Group projects by discipline (category)
   const grouped = projects.reduce<Record<string, typeof projects>>((acc, p) => {
     (acc[p.category] ||= []).push(p);
