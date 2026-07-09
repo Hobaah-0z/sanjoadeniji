@@ -4,6 +4,8 @@ import { Link } from "@tanstack/react-router";
 import { projects } from "@/lib/projects";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { Reveal } from "@/components/site/Reveal";
+import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
+
 
 export const Route = createFileRoute("/")({
   component: Index,
