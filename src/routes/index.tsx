@@ -18,23 +18,21 @@ function Index() {
       <section className="relative flex min-h-screen flex-col justify-end px-6 pb-16 pt-32 md:px-10 md:pb-20">
         <div className="max-w-[1600px]">
           <h1 className="font-display text-[16vw] uppercase leading-[0.85] md:text-[11vw]">
-            {["An independent", "creative studio", "for the modern brand."].map(
-              (line, i) => (
-                <motion.span
-                  key={line}
-                  initial={{ y: "110%" }}
-                  animate={{ y: 0 }}
-                  transition={{
-                    duration: 0.9,
-                    ease: [0.22, 1, 0.36, 1],
-                    delay: 0.1 + i * 0.12,
-                  }}
-                  className="block overflow-hidden"
-                >
-                  <span className="block">{line}</span>
-                </motion.span>
-              ),
-            )}
+            {["OBASANJO", "ADENIJI"].map((line, i) => (
+              <motion.span
+                key={line}
+                initial={{ y: "110%" }}
+                animate={{ y: 0 }}
+                transition={{
+                  duration: 0.9,
+                  ease: [0.22, 1, 0.36, 1],
+                  delay: 0.1 + i * 0.12,
+                }}
+                className="block overflow-hidden"
+              >
+                <span className="block">{line}</span>
+              </motion.span>
+            ))}
           </h1>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,8 +41,7 @@ function Index() {
             className="mt-10 flex flex-wrap items-end justify-between gap-6 text-xs uppercase tracking-widest"
           >
             <div className="flex flex-col gap-1 opacity-70">
-              <span>Based in Lisbon</span>
-              <span>Working worldwide</span>
+              <span>Full-stack Designer</span>
             </div>
             <div className="max-w-md text-sm normal-case tracking-normal opacity-80">
               Objet is a design and art direction practice building identity,
