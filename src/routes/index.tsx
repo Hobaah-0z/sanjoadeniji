@@ -76,6 +76,7 @@ function Index() {
         <div className="flex flex-col gap-20">
           {disciplines.map((discipline) => {
             const items = grouped[discipline].slice(0, 6);
+            const scrollRef = useHorizontalScroll<HTMLDivElement>();
             return (
               <div key={discipline}>
                 <Reveal className="mb-6 flex items-baseline justify-between border-b border-foreground/10 pb-4">
@@ -86,7 +87,10 @@ function Index() {
                     {items.length} {items.length === 1 ? "Project" : "Projects"}
                   </span>
                 </Reveal>
-                <div className="-mx-6 overflow-x-auto md:-mx-10">
+                <div
+                  ref={scrollRef}
+                  className="-mx-6 overflow-x-auto scrollbar-hide md:-mx-10"
+                >
                   <div className="flex snap-x snap-mandatory gap-6 px-6 pb-4 md:px-10">
                     {items.map((p, i) => (
                       <Reveal
@@ -107,6 +111,7 @@ function Index() {
             );
           })}
         </div>
+
       </section>
 
       {/* STATEMENT */}
