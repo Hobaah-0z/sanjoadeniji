@@ -32,8 +32,9 @@ function DisciplineRow({
       </Reveal>
       <div
         ref={scrollRef}
-        className="-mx-6 overflow-x-auto scrollbar-hide md:-mx-10"
+        className="project-row -mx-6 overflow-x-auto scrollbar-hide md:-mx-10"
       >
+
         <div className="flex snap-x snap-mandatory gap-6 px-6 pb-4 md:px-10">
           {items.map((p, i) => (
             <Reveal
