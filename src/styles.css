@@ -158,6 +158,16 @@
     letter-spacing: -0.02em;
     line-height: 0.9;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
 }
 
 @media (hover: hover) and (pointer: fine) {
