@@ -175,6 +175,7 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
 
     return () => {
       window.clearTimeout(wheelSnapTimer);
+      if (rafId != null) cancelAnimationFrame(rafId);
       el.removeEventListener("wheel", onWheel);
       el.removeEventListener("pointerdown", onPointerDown);
       el.removeEventListener("pointermove", onPointerMove);
