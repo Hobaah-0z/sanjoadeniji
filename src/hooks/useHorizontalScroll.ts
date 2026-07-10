@@ -7,12 +7,39 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     const el = ref.current;
     if (!el) return;
 
+    // Find the row of snap targets (direct children of the inner flex row).
+    const getCards = (): HTMLElement[] => {
+      const inner = el.querySelector<HTMLElement>(":scope > *");
+      const source = inner ?? el;
+      return Array.from(source.children) as HTMLElement[];
+    };
+
+    const snapToNearest = () => {
+      const cards = getCards();
+      if (!cards.length) return;
+      const elRect = el.getBoundingClientRect();
+      const target = elRect.left;
+      let bestLeft = 0;
+      let bestDist = Infinity;
+      for (const c of cards) {
+        const dist = Math.abs(c.getBoundingClientRect().left - target);
+        if (dist < bestDist) {
+          bestDist = dist;
+          bestLeft = el.scrollLeft + (c.getBoundingClientRect().left - target);
+        }
+      }
+      el.scrollTo({ left: bestLeft, behavior: "smooth" });
+    };
+
+    let wheelSnapTimer: number | undefined;
     const onWheel = (e: WheelEvent) => {
       if (e.deltaY === 0) return;
       // If the row can scroll horizontally, convert vertical wheel to horizontal
       if (el.scrollWidth > el.clientWidth) {
         e.preventDefault();
         el.scrollBy({ left: e.deltaY, behavior: "smooth" });
+        window.clearTimeout(wheelSnapTimer);
+        wheelSnapTimer = window.setTimeout(snapToNearest, 140);
       }
     };
 
@@ -71,6 +98,7 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
         } catch {}
         pointerId = null;
       }
+      if (moved) snapToNearest();
     };
 
     el.style.cursor = "grab";
@@ -81,6 +109,7 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     el.addEventListener("pointerleave", endDrag);
 
     return () => {
+      window.clearTimeout(wheelSnapTimer);
       el.removeEventListener("wheel", onWheel);
       el.removeEventListener("pointerdown", onPointerDown);
       el.removeEventListener("pointermove", onPointerMove);
