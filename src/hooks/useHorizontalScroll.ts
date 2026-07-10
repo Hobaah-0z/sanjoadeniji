@@ -7,40 +7,77 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     const el = ref.current;
     if (!el) return;
 
-    // Find the row of snap targets (direct children of the inner flex row).
+    // rAF-driven smooth scroll: we animate `current` toward `target` with a
+    // lerp. Wheel/keys/drag-inertia all just push `target`.
+    let target = el.scrollLeft;
+    let current = el.scrollLeft;
+    let rafId: number | null = null;
+    const EASE = 0.22; // higher = snappier
+    const SPEED = 1.4; // wheel multiplier — feels ~40% faster than native
+
     const getCards = (): HTMLElement[] => {
       const inner = el.querySelector<HTMLElement>(":scope > *");
       const source = inner ?? el;
       return Array.from(source.children) as HTMLElement[];
     };
 
-    const snapToNearest = () => {
+    const nearestSnapLeft = (from: number) => {
       const cards = getCards();
-      if (!cards.length) return;
-      const elRect = el.getBoundingClientRect();
-      const target = elRect.left;
-      let bestLeft = 0;
+      if (!cards.length) return from;
+      const elLeft = el.getBoundingClientRect().left;
+      let best = from;
       let bestDist = Infinity;
       for (const c of cards) {
-        const dist = Math.abs(c.getBoundingClientRect().left - target);
-        if (dist < bestDist) {
-          bestDist = dist;
-          bestLeft = el.scrollLeft + (c.getBoundingClientRect().left - target);
+        const cardLeft = el.scrollLeft + (c.getBoundingClientRect().left - elLeft);
+        const d = Math.abs(cardLeft - from);
+        if (d < bestDist) {
+          bestDist = d;
+          best = cardLeft;
         }
       }
-      el.scrollTo({ left: bestLeft, behavior: "smooth" });
+      return best;
+    };
+
+    const maxScroll = () => el.scrollWidth - el.clientWidth;
+
+    const tick = () => {
+      const diff = target - current;
+      if (Math.abs(diff) < 0.5) {
+        current = target;
+        el.scrollLeft = current;
+        rafId = null;
+        return;
+      }
+      current += diff * EASE;
+      el.scrollLeft = current;
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const kick = () => {
+      if (rafId == null) rafId = requestAnimationFrame(tick);
+    };
+
+    const setTarget = (next: number) => {
+      target = Math.max(0, Math.min(maxScroll(), next));
+      kick();
     };
 
     let wheelSnapTimer: number | undefined;
     const onWheel = (e: WheelEvent) => {
-      if (e.deltaY === 0) return;
-      // If the row can scroll horizontally, convert vertical wheel to horizontal
-      if (el.scrollWidth > el.clientWidth) {
-        e.preventDefault();
-        el.scrollBy({ left: e.deltaY, behavior: "smooth" });
-        window.clearTimeout(wheelSnapTimer);
-        wheelSnapTimer = window.setTimeout(snapToNearest, 140);
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (delta === 0) return;
+      if (el.scrollWidth <= el.clientWidth) return;
+      e.preventDefault();
+      // Sync target to observed position if user interrupted an animation.
+      if (rafId == null) {
+        target = el.scrollLeft;
+        current = el.scrollLeft;
       }
+      setTarget(target + delta * SPEED);
+      window.clearTimeout(wheelSnapTimer);
+      wheelSnapTimer = window.setTimeout(() => {
+        setTarget(nearestSnapLeft(target));
+      }, 120);
     };
 
     el.addEventListener("wheel", onWheel, { passive: false });
@@ -51,15 +88,28 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     let startScroll = 0;
     let pointerId: number | null = null;
     let moved = false;
+    let lastX = 0;
+    let lastT = 0;
+    let velocity = 0; // px per ms
 
     const onPointerDown = (e: PointerEvent) => {
       if (e.pointerType === "touch") return;
       if (el.scrollWidth <= el.clientWidth) return;
+      // Cancel any in-flight smooth animation so the grab feels instant.
+      if (rafId != null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      current = el.scrollLeft;
+      target = el.scrollLeft;
       isDown = true;
       moved = false;
       pointerId = e.pointerId;
       startX = e.clientX;
       startScroll = el.scrollLeft;
+      lastX = e.clientX;
+      lastT = performance.now();
+      velocity = 0;
       el.style.cursor = "grabbing";
       el.style.userSelect = "none";
     };
@@ -75,7 +125,18 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
       }
       if (moved) {
         e.preventDefault();
-        el.scrollLeft = startScroll - dx;
+        const nextLeft = startScroll - dx;
+        el.scrollLeft = nextLeft;
+        current = nextLeft;
+        target = nextLeft;
+        const now = performance.now();
+        const dt = now - lastT;
+        if (dt > 0) {
+          // Instantaneous velocity in px/ms (scroll direction is opposite of pointer)
+          velocity = -((e.clientX - lastX) / dt);
+        }
+        lastX = e.clientX;
+        lastT = now;
       }
     };
 
@@ -98,7 +159,11 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
         } catch {}
         pointerId = null;
       }
-      if (moved) snapToNearest();
+      if (moved) {
+        // Inertial fling: project ~180ms of momentum, then snap to nearest card.
+        const fling = velocity * 180;
+        setTarget(nearestSnapLeft(el.scrollLeft + fling));
+      }
     };
 
     el.style.cursor = "grab";
