@@ -67,12 +67,19 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (delta === 0) return;
       if (el.scrollWidth <= el.clientWidth) return;
-      e.preventDefault();
       // Sync target to observed position if user interrupted an animation.
       if (rafId == null) {
         target = el.scrollLeft;
         current = el.scrollLeft;
       }
+      // At the row's edge in the scroll direction? Let the page scroll
+      // vertically to the next section instead of trapping the wheel.
+      const atStart = target <= 0.5;
+      const atEnd = target >= maxScroll() - 0.5;
+      if ((delta < 0 && atStart) || (delta > 0 && atEnd)) {
+        return; // don't preventDefault — native vertical scroll continues
+      }
+      e.preventDefault();
       setTarget(target + delta * SPEED);
       window.clearTimeout(wheelSnapTimer);
       wheelSnapTimer = window.setTimeout(() => {
