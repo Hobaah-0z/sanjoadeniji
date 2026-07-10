@@ -63,10 +63,20 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     };
 
     let wheelSnapTimer: number | undefined;
+    // Once we hand off a gesture to vertical page scroll, stay handed off
+    // until the wheel goes quiet — otherwise trailing momentum events
+    // oscillate between horizontal capture and vertical scroll (jitter).
+    let handoff = false;
+    let lastWheelAt = 0;
     const onWheel = (e: WheelEvent) => {
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (delta === 0) return;
       if (el.scrollWidth <= el.clientWidth) return;
+      const now = performance.now();
+      // Gesture ended (>140ms gap) — reset handoff so the next gesture
+      // can capture the row again.
+      if (now - lastWheelAt > 140) handoff = false;
+      lastWheelAt = now;
       // Sync target to observed position if user interrupted an animation.
       if (rafId == null) {
         target = el.scrollLeft;
@@ -76,7 +86,8 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
       // vertically to the next section instead of trapping the wheel.
       const atStart = target <= 0.5;
       const atEnd = target >= maxScroll() - 0.5;
-      if ((delta < 0 && atStart) || (delta > 0 && atEnd)) {
+      if (handoff || (delta < 0 && atStart) || (delta > 0 && atEnd)) {
+        handoff = true;
         return; // don't preventDefault — native vertical scroll continues
       }
       e.preventDefault();
