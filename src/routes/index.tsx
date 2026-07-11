@@ -40,7 +40,7 @@ function DisciplineRow({
             <Reveal
               key={p.slug}
               delay={i * 0.06}
-              className="w-[75vw] shrink-0 snap-start sm:w-[45vw] md:w-[30vw] lg:w-[22vw]"
+              className="w-[85vw] shrink-0 snap-start sm:w-[60vw] md:w-[42vw] lg:w-[33vw]"
             >
               <ProjectCard project={p} index={i} aspect="aspect-[4/5]" />
             </Reveal>
