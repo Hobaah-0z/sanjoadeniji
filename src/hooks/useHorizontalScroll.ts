@@ -12,8 +12,11 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     let target = el.scrollLeft;
     let current = el.scrollLeft;
     let rafId: number | null = null;
-    const EASE = 0.22; // higher = snappier
-    const SPEED = 1.4; // wheel multiplier — feels ~40% faster than native
+    let lastFrame = performance.now();
+    // Time-based smoothing constant (seconds). Lower = snappier, higher = silkier.
+    // Framerate-independent via exponential smoothing.
+    const SMOOTH_TAU = 0.11;
+    const SPEED = 1.15; // wheel multiplier
 
     const getCards = (): HTMLElement[] => {
       const inner = el.querySelector<HTMLElement>(":scope > *");
@@ -41,20 +44,28 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     const maxScroll = () => el.scrollWidth - el.clientWidth;
 
     const tick = () => {
+      const now = performance.now();
+      const dt = Math.min(0.05, (now - lastFrame) / 1000);
+      lastFrame = now;
       const diff = target - current;
-      if (Math.abs(diff) < 0.5) {
+      if (Math.abs(diff) < 0.35) {
         current = target;
         el.scrollLeft = current;
         rafId = null;
         return;
       }
-      current += diff * EASE;
+      // Framerate-independent exponential smoothing
+      const alpha = 1 - Math.exp(-dt / SMOOTH_TAU);
+      current += diff * alpha;
       el.scrollLeft = current;
       rafId = requestAnimationFrame(tick);
     };
 
     const kick = () => {
-      if (rafId == null) rafId = requestAnimationFrame(tick);
+      if (rafId == null) {
+        lastFrame = performance.now();
+        rafId = requestAnimationFrame(tick);
+      }
     };
 
     const setTarget = (next: number) => {
@@ -95,7 +106,7 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
       window.clearTimeout(wheelSnapTimer);
       wheelSnapTimer = window.setTimeout(() => {
         setTarget(nearestSnapLeft(target));
-      }, 120);
+      }, 180);
     };
 
     el.addEventListener("wheel", onWheel, { passive: false });
