@@ -22,11 +22,11 @@ function DisciplineRow({
 
   return (
     <div>
-      <Reveal className="mb-6 flex items-baseline justify-between border-b border-foreground/10 pb-4">
-        <h3 className="font-display text-2xl uppercase md:text-4xl">
+      <Reveal className="mb-5 flex items-baseline justify-between border-b border-foreground/10 pb-4 md:mb-6">
+        <h3 className="font-display text-3xl uppercase md:text-4xl">
           {discipline}
         </h3>
-        <span className="text-xs uppercase tracking-widest opacity-60">
+        <span className="text-xs uppercase tracking-widest opacity-60 md:text-sm">
           {items.length} {items.length === 1 ? "Project" : "Projects"}
         </span>
       </Reveal>
