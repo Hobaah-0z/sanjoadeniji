@@ -55,15 +55,15 @@ export function ProjectCard({
           />
         )}
       </div>
-      <div className="mt-4 flex items-baseline justify-between gap-4 overflow-hidden">
+      <div className="mt-3 flex items-baseline justify-between gap-3 overflow-hidden md:mt-5 md:gap-4">
         <h3
-          className={`font-display text-2xl uppercase transition-transform duration-500 ease-out md:text-3xl ${
+          className={`font-display text-3xl uppercase transition-transform duration-500 ease-out md:text-4xl ${
             hover ? "-translate-y-0.5" : ""
           }`}
         >
           {project.title}
         </h3>
-        <span className="text-xs uppercase tracking-widest opacity-60">
+        <span className="shrink-0 text-xs uppercase tracking-widest opacity-60 md:text-sm">
           {project.category} — {project.year}
         </span>
       </div>

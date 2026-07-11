@@ -22,27 +22,27 @@ function DisciplineRow({
 
   return (
     <div>
-      <Reveal className="mb-6 flex items-baseline justify-between border-b border-foreground/10 pb-4">
-        <h3 className="font-display text-2xl uppercase md:text-4xl">
+      <Reveal className="mb-5 flex items-baseline justify-between border-b border-foreground/10 pb-4 md:mb-6">
+        <h3 className="font-display text-3xl uppercase md:text-4xl">
           {discipline}
         </h3>
-        <span className="text-xs uppercase tracking-widest opacity-60">
+        <span className="text-xs uppercase tracking-widest opacity-60 md:text-sm">
           {items.length} {items.length === 1 ? "Project" : "Projects"}
         </span>
       </Reveal>
       <div
         ref={scrollRef}
-        className="project-row -mx-6 overflow-x-auto scrollbar-hide md:-mx-10"
+        className="project-row -mx-4 overflow-x-auto scrollbar-hide md:-mx-10"
       >
 
-        <div className="flex snap-x snap-mandatory gap-6 px-6 pb-4 md:px-10">
+        <div className="flex snap-x snap-mandatory gap-4 px-4 pb-4 md:gap-8 md:px-10">
           {items.map((p, i) => (
             <Reveal
               key={p.slug}
               delay={i * 0.06}
-              className="w-[85vw] shrink-0 snap-start sm:w-[60vw] md:w-[42vw] lg:w-[33vw]"
+              className="w-[92vw] shrink-0 snap-start sm:w-[65vw] md:w-[45vw] lg:w-[35vw]"
             >
-              <ProjectCard project={p} index={i} aspect="aspect-[4/5]" />
+              <ProjectCard project={p} index={i} aspect="aspect-[3/4] md:aspect-[4/5]" />
             </Reveal>
           ))}
         </div>
