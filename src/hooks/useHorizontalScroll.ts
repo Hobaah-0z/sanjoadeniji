@@ -196,11 +196,114 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
     };
 
     el.style.cursor = "grab";
+    // Let the browser handle vertical panning natively; we take over horizontal.
+    const prevTouchAction = el.style.touchAction;
+    el.style.touchAction = "pan-y";
     el.addEventListener("pointerdown", onPointerDown);
     el.addEventListener("pointermove", onPointerMove);
     el.addEventListener("pointerup", endDrag);
     el.addEventListener("pointercancel", endDrag);
     el.addEventListener("pointerleave", endDrag);
+
+    // ---- Touch: bespoke swipe handling with edge handoff to page scroll ----
+    let tActive = false;
+    let tDecided: "h" | "v" | null = null;
+    let tStartX = 0;
+    let tStartY = 0;
+    let tStartScroll = 0;
+    let tLastX = 0;
+    let tLastT = 0;
+    let tVelocity = 0;
+    let tId: number | null = null;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      if (el.scrollWidth <= el.clientWidth) return;
+      const t = e.touches[0];
+      tActive = true;
+      tDecided = null;
+      tId = t.identifier;
+      tStartX = tLastX = t.clientX;
+      tStartY = t.clientY;
+      tStartScroll = el.scrollLeft;
+      tLastT = performance.now();
+      tVelocity = 0;
+      // Cancel in-flight smoothing for an instant grab.
+      if (rafId != null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      current = target = el.scrollLeft;
+    };
+
+    const getTouch = (e: TouchEvent) => {
+      for (const t of Array.from(e.touches)) if (t.identifier === tId) return t;
+      return null;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!tActive) return;
+      const t = getTouch(e);
+      if (!t) return;
+      const dx = t.clientX - tStartX;
+      const dy = t.clientY - tStartY;
+      if (tDecided == null) {
+        if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+        if (Math.abs(dx) > Math.abs(dy)) {
+          // Edge handoff: swiping further past an edge → let page scroll vertically.
+          const atStart = el.scrollLeft <= 0.5;
+          const atEnd = el.scrollLeft >= maxScroll() - 0.5;
+          if ((dx > 0 && atStart) || (dx < 0 && atEnd)) {
+            tDecided = "v";
+            tActive = false;
+            return;
+          }
+          tDecided = "h";
+        } else {
+          tDecided = "v";
+          tActive = false;
+          return;
+        }
+      }
+      if (tDecided !== "h") return;
+      if (e.cancelable) e.preventDefault();
+      let nextLeft = tStartScroll - dx;
+      // Rubber-band resistance beyond edges for a natural feel.
+      const max = maxScroll();
+      if (nextLeft < 0) nextLeft = nextLeft * 0.35;
+      else if (nextLeft > max) nextLeft = max + (nextLeft - max) * 0.35;
+      el.scrollLeft = nextLeft;
+      current = target = nextLeft;
+      const now = performance.now();
+      const dt = now - tLastT;
+      if (dt > 0) tVelocity = -((t.clientX - tLastX) / dt);
+      tLastX = t.clientX;
+      tLastT = now;
+
+      // Mid-swipe edge overshoot → hand off remaining gesture to page scroll.
+      if (nextLeft <= 0 && dx > 0) {
+        tDecided = "v";
+        tActive = false;
+      } else if (nextLeft >= max && dx < 0) {
+        tDecided = "v";
+        tActive = false;
+      }
+    };
+
+    const onTouchEnd = () => {
+      if (tDecided === "h") {
+        const fling = tVelocity * 180;
+        setTarget(nearestSnapLeft(el.scrollLeft + fling));
+      }
+      tActive = false;
+      tDecided = null;
+      tId = null;
+    };
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: true });
+    el.addEventListener("touchcancel", onTouchEnd, { passive: true });
 
     return () => {
       window.clearTimeout(wheelSnapTimer);
@@ -211,6 +314,11 @@ export function useHorizontalScroll<T extends HTMLElement = HTMLDivElement>() {
       el.removeEventListener("pointerup", endDrag);
       el.removeEventListener("pointercancel", endDrag);
       el.removeEventListener("pointerleave", endDrag);
+      el.removeEventListener("touchstart", onTouchStart);
+      el.removeEventListener("touchmove", onTouchMove);
+      el.removeEventListener("touchend", onTouchEnd);
+      el.removeEventListener("touchcancel", onTouchEnd);
+      el.style.touchAction = prevTouchAction;
     };
   }, []);
 
