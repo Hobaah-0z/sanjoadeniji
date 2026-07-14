@@ -64,7 +64,7 @@ function Index() {
   return (
     <>
       {/* HERO */}
-      <section className="relative flex min-h-screen flex-col justify-between overflow-hidden pt-24 md:pt-28">
+      <section className="relative flex h-screen min-h-[720px] flex-col justify-between overflow-hidden pt-20 md:pt-24">
         {/* Portrait + overlaid roles */}
         <div className="relative flex flex-1 items-center justify-center">
           <motion.img
@@ -75,20 +75,20 @@ function Index() {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute inset-x-0 mx-auto h-[62vh] w-auto max-w-none object-contain md:h-[70vh]"
+            className="pointer-events-none absolute inset-0 m-auto h-full w-auto max-w-none object-contain"
           />
-          <div className="pointer-events-none relative z-10 mix-blend-difference">
-            <h2 className="font-display text-right uppercase leading-[0.95] text-[hsl(0_0%_100%)] text-[9vw] md:text-[5.5vw]">
+          <div className="pointer-events-none relative z-10 mix-blend-difference px-6 md:px-10">
+            <h2 className="font-display text-center uppercase leading-[0.95] text-white text-[8vw] md:text-[5vw]">
               {["Creative Director", "Digital Designer", "Art Direction"].map(
                 (line, i) => (
                   <motion.span
                     key={line}
-                    initial={{ y: "110%", opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{
-                      duration: 0.9,
+                      duration: 0.7,
                       ease: [0.22, 1, 0.36, 1],
-                      delay: 0.3 + i * 0.1,
+                      delay: 0.3 + i * 0.12,
                     }}
                     className="block"
                   >
