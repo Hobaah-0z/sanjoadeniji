@@ -5,6 +5,7 @@ import { projects } from "@/lib/projects";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
+import heroPortrait from "@/assets/hero-portrait.jpg";
 
 
 export const Route = createFileRoute("/")({
@@ -63,40 +64,57 @@ function Index() {
   return (
     <>
       {/* HERO */}
-      <section className="relative flex min-h-screen flex-col justify-end px-6 pb-16 pt-32 md:px-10 md:pb-20">
-        <div className="max-w-[1600px]">
-          <h1 className="font-display text-[16vw] uppercase leading-[0.85] md:text-[11vw]">
-            {["OBASANJO", "ADENIJI"].map((line, i) => (
-              <motion.span
-                key={line}
-                initial={{ y: "110%" }}
-                animate={{ y: 0 }}
-                transition={{
-                  duration: 0.9,
-                  ease: [0.22, 1, 0.36, 1],
-                  delay: 0.1 + i * 0.12,
-                }}
-                className="block overflow-hidden"
-              >
-                <span className="block">{line}</span>
-              </motion.span>
-            ))}
-          </h1>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6 }}
-            className="mt-10 flex flex-wrap items-end justify-between gap-6 text-xs uppercase tracking-widest"
+      <section className="relative flex h-screen min-h-[720px] flex-col justify-between overflow-hidden pt-20 md:pt-24">
+        {/* Portrait + overlaid roles */}
+        <div className="relative flex flex-1 items-center justify-center">
+          <motion.img
+            src={heroPortrait}
+            alt="Obasanjo Adeniji, full-stack designer, side profile portrait"
+            width={1280}
+            height={1600}
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            className="pointer-events-none absolute inset-0 m-auto h-full w-auto max-w-none object-contain"
+          />
+          <div className="pointer-events-none relative z-10 mix-blend-difference px-6 md:px-10">
+            <h2 className="font-display text-center uppercase leading-[0.95] text-white text-[8vw] md:text-[5vw]">
+              {["Creative Director", "Digital Designer", "Art Direction"].map(
+                (line) => (
+                  <span key={line} className="block">
+                    {line}
+                  </span>
+                ),
+              )}
+            </h2>
+          </div>
+        </div>
+
+        {/* Bio */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+          className="mx-auto max-w-4xl px-6 pb-6 text-center text-sm leading-relaxed opacity-80 md:px-10 md:text-base"
+        >
+          Obasanjo Adeniji works at the intersection of design, engineering, and
+          visual culture — balancing roles as a full-stack designer, art
+          director, and researcher. His practice blends clarity with
+          experimentation, shaping identities and interfaces that resonate
+          across cultural and commercial landscapes.
+        </motion.p>
+
+        {/* Giant name */}
+        <div className="relative w-full overflow-hidden">
+          <motion.h1
+            initial={{ y: "20%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] md:px-6"
           >
-            <div className="flex flex-col gap-1 opacity-70">
-              <span>Full-stack Designer</span>
-            </div>
-            <div className="max-w-md text-sm normal-case tracking-normal opacity-80">
-              Objet is a design and art direction practice building identity,
-              typographic and moving-image systems for cultural and commercial
-              clients since 2018.
-            </div>
-          </motion.div>
+            <span>Obasanjo Adeniji</span>
+            <span className="mt-[0.5vw] text-[2.6vw]">®</span>
+          </motion.h1>
         </div>
       </section>
 
