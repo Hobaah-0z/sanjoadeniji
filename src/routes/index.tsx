@@ -83,10 +83,10 @@ function Index() {
                 (line, i) => (
                   <motion.span
                     key={line}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ y: 24, clipPath: "inset(0 0 100% 0)" }}
+                    animate={{ y: 0, clipPath: "inset(0 0 0% 0)" }}
                     transition={{
-                      duration: 0.7,
+                      duration: 0.9,
                       ease: [0.22, 1, 0.36, 1],
                       delay: 0.3 + i * 0.12,
                     }}
