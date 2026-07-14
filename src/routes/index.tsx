@@ -80,20 +80,9 @@ function Index() {
           <div className="pointer-events-none relative z-10 mix-blend-difference px-6 md:px-10">
             <h2 className="font-display text-center uppercase leading-[0.95] text-white text-[8vw] md:text-[5vw]">
               {["Creative Director", "Digital Designer", "Art Direction"].map(
-                (line, i) => (
-                  <span key={line} className="block overflow-hidden">
-                    <motion.span
-                      initial={{ y: "100%" }}
-                      animate={{ y: "0%" }}
-                      transition={{
-                        duration: 0.9,
-                        ease: [0.22, 1, 0.36, 1],
-                        delay: 0.3 + i * 0.12,
-                      }}
-                      className="block"
-                    >
-                      {line}
-                    </motion.span>
+                (line) => (
+                  <span key={line} className="block">
+                    {line}
                   </span>
                 ),
               )}
