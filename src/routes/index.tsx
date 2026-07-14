@@ -110,10 +110,10 @@ function Index() {
             initial={{ y: "20%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="font-display flex w-full items-start justify-between whitespace-nowrap px-4 uppercase leading-[0.85] text-[15.5vw] md:px-6"
+            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] md:px-6"
           >
             <span>Obasanjo Adeniji</span>
-            <span className="mt-[1vw] text-[4vw] md:text-[3vw]">®</span>
+            <span className="mt-[0.5vw] text-[2.6vw]">®</span>
           </motion.h1>
         </div>
       </section>
