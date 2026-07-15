@@ -83,7 +83,7 @@ function Index() {
         <div className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
 
         {/* Role labels */}
-        <div className="relative z-10 flex flex-[0.5] items-center justify-center px-6 md:px-10">
+        <div className="relative z-10 flex flex-[0.3] items-end justify-center px-6 md:px-10 pb-2 md:pb-4">
           <h2 className="font-display text-center uppercase leading-[0.95] text-white mix-blend-difference text-[4vw] md:text-[2.5vw]">
             {["Creative Director", "Digital Designer", "Art Direction"].map(
               (line) => (
