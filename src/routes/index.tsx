@@ -5,7 +5,7 @@ import { projects } from "@/lib/projects";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { Reveal } from "@/components/site/Reveal";
 import { useHorizontalScroll } from "@/hooks/useHorizontalScroll";
-import heroPortrait from "@/assets/hero-portrait.jpg";
+import heroBg from "@/assets/hero-bg.jpg.asset.json";
 
 
 export const Route = createFileRoute("/")({
@@ -65,29 +65,34 @@ function Index() {
     <>
       {/* HERO */}
       <section className="relative flex h-screen min-h-[720px] flex-col justify-between overflow-hidden pt-20 md:pt-24">
-        {/* Portrait + overlaid roles */}
-        <div className="relative flex flex-1 items-center justify-center">
-          <motion.img
-            src={heroPortrait}
-            alt="Obasanjo Adeniji, full-stack designer, side profile portrait"
-            width={1280}
-            height={1600}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="pointer-events-none absolute inset-0 m-auto h-full w-auto max-w-none object-contain"
+        {/* Background image */}
+        <motion.div
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+          className="pointer-events-none absolute inset-0 z-0"
+        >
+          <img
+            src={heroBg.url}
+            alt="Cinematic portrait of Obasanjo Adeniji"
+            className="h-full w-full object-cover"
           />
-          <div className="pointer-events-none relative z-10 mix-blend-difference px-6 md:px-10">
-            <h2 className="font-display text-center uppercase leading-[0.95] text-white text-[8vw] md:text-[5vw]">
-              {["Creative Director", "Digital Designer", "Art Direction"].map(
-                (line) => (
-                  <span key={line} className="block">
-                    {line}
-                  </span>
-                ),
-              )}
-            </h2>
-          </div>
+        </motion.div>
+
+        {/* Subtle overlay for legibility */}
+        <div className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
+
+        {/* Role labels */}
+        <div className="relative z-10 flex flex-1 items-center justify-center px-6 md:px-10">
+          <h2 className="font-display text-center uppercase leading-[0.95] text-white mix-blend-difference text-[4vw] md:text-[2.5vw]">
+            {["Creative Director", "Digital Designer", "Art Direction"].map(
+              (line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ),
+            )}
+          </h2>
         </div>
 
         {/* Bio */}
@@ -95,7 +100,7 @@ function Index() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.6 }}
-          className="mx-auto max-w-4xl px-6 pb-6 text-center text-sm leading-relaxed opacity-80 md:px-10 md:text-base"
+          className="relative z-10 mx-auto max-w-4xl px-6 pb-6 text-center text-sm leading-relaxed text-white/80 md:px-10 md:text-base"
         >
           Obasanjo Adeniji works at the intersection of design, engineering, and
           visual culture — balancing roles as a full-stack designer, art
@@ -105,12 +110,12 @@ function Index() {
         </motion.p>
 
         {/* Giant name */}
-        <div className="relative w-full overflow-hidden">
+        <div className="relative z-10 w-full overflow-hidden">
           <motion.h1
             initial={{ y: "20%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] md:px-6"
+            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] text-white md:px-6"
           >
             <span>Obasanjo Adeniji</span>
             <span className="mt-[0.5vw] text-[2.6vw]">®</span>
