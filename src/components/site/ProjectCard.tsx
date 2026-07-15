@@ -30,14 +30,14 @@ export function ProjectCard({
       data-cursor="view"
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
-      className="group block"
+      className="group block transition-all duration-500 ease-out hover:-translate-y-2"
     >
       <div className={`relative overflow-hidden bg-neutral-100 ${aspect}`}>
         <img
           src={project.image}
           alt={project.title}
           loading={index < 2 ? "eager" : "lazy"}
-          className={`absolute inset-0 h-full w-full object-cover transition-all duration-[600ms] ease-out group-hover:scale-[1.03] ${
+          className={`absolute inset-0 h-full w-full object-cover transition-all duration-[600ms] ease-out group-hover:scale-[1.06] ${
             hover ? "opacity-0" : "opacity-100"
           }`}
         />
@@ -58,12 +58,16 @@ export function ProjectCard({
       <div className="mt-3 flex items-baseline justify-between gap-3 overflow-hidden md:mt-5 md:gap-4">
         <h3
           className={`font-display text-3xl uppercase transition-transform duration-500 ease-out md:text-4xl ${
-            hover ? "-translate-y-0.5" : ""
+            hover ? "-translate-y-1" : ""
           }`}
         >
           {project.title}
         </h3>
-        <span className="shrink-0 text-xs uppercase tracking-widest opacity-60 md:text-sm">
+        <span
+  className={`shrink-0 text-xs uppercase tracking-widest transition-all duration-500 md:text-sm ${
+    hover ? "opacity-100 translate-y-0" : "opacity-60 translate-y-1"
+  }`}
+>
           {project.category} — {project.year}
         </span>
       </div>
