@@ -95,6 +95,19 @@ function Index() {
           </h2>
         </div>
 
+        {/* Giant name */}
+        <div className="relative z-10 w-full overflow-hidden">
+          <motion.h1
+            initial={{ y: "20%", opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] text-white md:px-6"
+          >
+            <span>Obasanjo Adeniji</span>
+            <span className="mt-[0.5vw] text-[2.6vw]">®</span>
+          </motion.h1>
+        </div>
+
         {/* Bio */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -108,19 +121,6 @@ function Index() {
           experimentation, shaping identities and interfaces that resonate
           across cultural and commercial landscapes.
         </motion.p>
-
-        {/* Giant name */}
-        <div className="relative z-10 w-full overflow-hidden">
-          <motion.h1
-            initial={{ y: "20%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] text-white md:px-6"
-          >
-            <span>Obasanjo Adeniji</span>
-            <span className="mt-[0.5vw] text-[2.6vw]">®</span>
-          </motion.h1>
-        </div>
       </section>
 
       {/* FEATURED */}
