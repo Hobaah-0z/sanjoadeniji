@@ -64,7 +64,7 @@ function Index() {
   return (
     <>
       {/* HERO */}
-      <section className="relative flex h-screen min-h-[720px] flex-col justify-between overflow-hidden pt-20 md:pt-24">
+      <section className="relative flex h-screen min-h-[720px] flex-col items-center justify-center overflow-hidden pt-20 md:pt-24">
         {/* Background image */}
         <motion.div
           initial={{ opacity: 0, scale: 1.05 }}
@@ -82,9 +82,15 @@ function Index() {
         {/* Subtle overlay for legibility */}
         <div className="pointer-events-none absolute inset-0 z-0 bg-black/40" />
 
-        {/* Role labels */}
-        <div className="relative z-10 flex flex-[0.3] items-end justify-center px-6 md:px-10 pb-2 md:pb-4">
-          <h2 className="font-display text-center uppercase leading-[0.95] text-white mix-blend-difference text-[4vw] md:text-[2.5vw]">
+        {/* Centered hero content: roles → name → bio */}
+        <div className="relative z-10 flex flex-col items-center gap-2 md:gap-3">
+          {/* Role labels */}
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="font-display text-center uppercase leading-[0.95] text-white mix-blend-difference text-[4vw] md:text-[2.5vw]"
+          >
             {["Creative Director", "Digital Designer", "Art Direction"].map(
               (line) => (
                 <span key={line} className="block">
@@ -92,35 +98,35 @@ function Index() {
                 </span>
               ),
             )}
-          </h2>
-        </div>
+          </motion.h2>
 
-        {/* Giant name */}
-        <div className="relative z-10 w-full overflow-hidden">
-          <motion.h1
-            initial={{ y: "20%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
-            className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] text-white md:px-6"
+          {/* Giant name */}
+          <div className="w-full overflow-hidden">
+            <motion.h1
+              initial={{ y: "20%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.4 }}
+              className="font-display flex w-full items-start justify-center gap-[1vw] whitespace-nowrap px-4 uppercase leading-[0.85] text-[10.8vw] text-white md:px-6"
+            >
+              <span>Obasanjo Adeniji</span>
+              <span className="mt-[0.5vw] text-[2.6vw]">®</span>
+            </motion.h1>
+          </div>
+
+          {/* Bio */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mx-auto max-w-4xl px-6 text-center text-sm leading-relaxed text-white/80 md:px-10 md:text-base"
           >
-            <span>Obasanjo Adeniji</span>
-            <span className="mt-[0.5vw] text-[2.6vw]">®</span>
-          </motion.h1>
+            Obasanjo Adeniji works at the intersection of design, engineering, and
+            visual culture — balancing roles as a full-stack designer, art
+            director, and researcher. His practice blends clarity with
+            experimentation, shaping identities and interfaces that resonate
+            across cultural and commercial landscapes.
+          </motion.p>
         </div>
-
-        {/* Bio */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.6 }}
-          className="relative z-10 mx-auto max-w-4xl px-6 pb-6 text-center text-sm leading-relaxed text-white/80 md:px-10 md:text-base"
-        >
-          Obasanjo Adeniji works at the intersection of design, engineering, and
-          visual culture — balancing roles as a full-stack designer, art
-          director, and researcher. His practice blends clarity with
-          experimentation, shaping identities and interfaces that resonate
-          across cultural and commercial landscapes.
-        </motion.p>
       </section>
 
       {/* FEATURED */}
